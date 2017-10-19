@@ -15,13 +15,14 @@ def weather():
     try:
         ucity = request.form['userCity']
         latitude, longitude = getGeocodeLocation(ucity)
-        r = requests.get(
-            'http://api.openweathermap.org/data/2.5/weather?APPID=7fc77377fc287a3ca61556cf825e9730&lat=%s&lon=%s' % (latitude, longitude))
+        # r = requests.get(
+        #    'http://api.openweathermap.org/data/2.5/weather?APPID=7fc77377fc287a3ca61556cf825e9730&lat=%s&lon=%s' % (latitude, longitude))
+        r = requests.get('https://api.darksky.net/forecast/24d67c234f99b3d0913838bdedb6148a/%s,%s' % (latitude, longitude))
         json_object = r.json()
-        temp_k = float(json_object['main']['temp'])
-        temp_f = int((temp_k - 273.15) * 1.8 + 32)
-        city = json_object['name']
-        sky = str(json_object['weather'][0]['description'])
+        temp_k = json_object['currently']['temperature']
+        temp_f = int(temp_k)
+        city = str(ucity)
+        sky = str(json_object['currently']['summary'])
         return render_template('weather.html', temp=temp_f, city=city, sky=sky)
     except:
         return render_template('error.html')

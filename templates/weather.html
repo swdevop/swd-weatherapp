@@ -1,7 +1,16 @@
 <html>
 	<head><title>Current Temperature</title></head>
 <body>
-	<h1> The current temperature in {{ city }} is {{ temp }} &#x2109;. </h1>
+
+    <h1>Ray's Weather App</h1>
+
+    <form method="POST" action="/weather">
+			Zip Code : <input type="text" name="zip">
+			<input type="submit">
+		</form>
+
+	<h1> {{ city }} </h1>
     <h2> {{ sky }}</h2>
+    <h2> {{ temp }} &#x2109;</h2>
 </body>
 </html>

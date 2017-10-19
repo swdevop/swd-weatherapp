@@ -1,0 +1,1 @@
+web: gunicorn WeatherAppv2:app

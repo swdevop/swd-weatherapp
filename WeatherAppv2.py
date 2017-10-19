@@ -1,5 +1,6 @@
 import requests
 from flask import Flask, render_template, request
+from geocode import getGeocodeLocation
 
 app = Flask(__name__)
 
@@ -12,8 +13,10 @@ def hello_world():
 @app.route('/weather', methods=['POST'])
 def weather():
     try:
-        zipcode = request.form['zip']
-        r = requests.get('http://api.openweathermap.org/data/2.5/weather?APPID=7fc77377fc287a3ca61556cf825e9730&zip=' + zipcode)
+        ucity = request.form['userCity']
+        latitude, longitude = getGeocodeLocation(ucity)
+        r = requests.get(
+            'http://api.openweathermap.org/data/2.5/weather?APPID=7fc77377fc287a3ca61556cf825e9730&lat=%s&lon=%s' % (latitude, longitude))
         json_object = r.json()
         temp_k = float(json_object['main']['temp'])
         temp_f = int((temp_k - 273.15) * 1.8 + 32)
@@ -26,4 +29,3 @@ def weather():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
-

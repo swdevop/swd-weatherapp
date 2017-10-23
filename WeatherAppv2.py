@@ -22,9 +22,10 @@ def weather():
         temp_f = int(temp_k)
         city = str(ucity)
         sky = str(json_object['currently']['summary'])
-        hourly = str(json_object['hourly']['summary'])
+        forecast = str(json_object['hourly']['summary'])
         rainchance = int(json_object['currently']['precipProbability'])
-        return render_template('weather.html', temp=temp_f, city=city, sky=sky, hourly=hourly, rainchance=rainchance)
+
+        return render_template('weather.html', temp=temp_f, city=city, sky=sky, forecast=forecast, rainchance=rainchance)
     except:
         return render_template('error.html')
 
